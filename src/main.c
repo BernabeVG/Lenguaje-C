@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "funcsH/tablero.h"
+//#include "funcsH/jugador.h"
+//#include "funcsH/movimiento.h"
 
 //Prototipos de funciones
 void intruccionesJuego();
@@ -7,14 +10,16 @@ void intruccionesJuego();
 int main() 
 {
     int opcion;
-
-    do
+    char espacios[9];
+    inicializarTablero(espacios);
+    dibujarTablero(espacios);
+    /*do
     {
 
         printf("\n---Kattam Vilayattu---\n");
         printf("1. Instrucciones: \n");
         printf("2. Iniciar Juego\n");
-        printF("3. Salir\n");
+        print("3. Salir\n");
         printf("Seleccione una opción: \n");
         scanf("%d", &opcion);
     
@@ -41,6 +46,7 @@ int main()
     }while(opcion == 1);
 
     return 0;
+    */
 }
 
 //funciones

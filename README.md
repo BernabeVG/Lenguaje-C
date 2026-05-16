@@ -1,3 +1,6 @@
 # Lenguaje-C Compilar
-gcc Programa.c -o Programa
-./Programa
+gcc -std=c99 src\main.c src\funcs\*.c -o main
+./main.exe
+
+
+

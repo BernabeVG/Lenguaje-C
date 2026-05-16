@@ -1,4 +1,4 @@
-#include "jugador.h"
+#include "../funcsH/jugador.h"
 #include <stdio.h>
 
 void turnoJudador(char *espacios, char jugador)
@@ -9,7 +9,7 @@ void turnoJudador(char *espacios, char jugador)
          scanf("%d", &numero);
          numero--;
           if(*(espacios+numero)=='O'){
-         *(espacios+numero) = jugador1;
+         *(espacios+numero) = jugador;
           break;
        }
     }while(numero > 0 || !numero < 8);

@@ -1,5 +1,13 @@
-#include "movimiento.h"
+#include "../funcsH/movimiento.h"
 
-bool esMovimientoValido(int origen, int destino, char *espacios){
-    
+#include <stdio.h>
+
+void esMovimientoValido(int origen, int destino, char *espacios){
+
+    printf("Ingrese la ficha que desea mover: ");
+    scanf("%d", &origen);
+    printf("Ingrese la ficha que desea mover: ");
+    scanf("%d", &destino);
+    *(espacios+i) == origen;
+    *(espacios+i+1) == destino;
 }
