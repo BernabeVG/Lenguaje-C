@@ -1,2 +1,3 @@
-# Lenguaje-C
-Ejercicios para estudiar para examen en lenguaje c
+# Lenguaje-C Compilar
+gcc Programa.c -o Programa
+./Programa
