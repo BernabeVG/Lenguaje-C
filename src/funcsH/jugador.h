@@ -2,11 +2,10 @@
 #include <stdlib.h>
 typedef struct 
 {
-    char simbol;
+    char simbolo;
     int numFichas;
 }Jugador;
 
-void turnoJugador(char *espacios, char jugador);
-int verificarGanador(char *espacios, char jugador, char jugador2);
-int verificarEmpate(char *espacios);
-int verificarBloqueo(char *espacios, char simboloActual);
+void inicializarFichas(Jugador *p1, Jugador *p2);
+void turnoJudador(char *espacios, Jugador p, int tipo, int org);
+void moverFichaPuesta(char *espacios, Jugador p);

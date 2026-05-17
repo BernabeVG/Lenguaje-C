@@ -1,13 +1,76 @@
 #include "../funcsH/movimiento.h"
+#include "../funcsH/Jugador.h"
 
-#include <stdio.h>
+int movimientoValido(int pos, char *espacios, Jugador p) {
+    if (*(espacios + pos) == ' ')
+    {
+        return 1;
+    }
+    return 0;
+}
+int fichaValida(int pos, char *espacios, Jugador p) {
+    if (*(espacios + pos) == p.simbolo)
+    {
+        return 1;
+    }
+    return 0;
+}
+int verGanador(const char *espacios) {
+    // 1. Verificar Filas (Retornan 1, 2 o 3)
+    if ((*(espacios + 0) != ' ') && (*(espacios + 0) == *(espacios + 1) && *(espacios + 1) == *(espacios + 2))) return 1;
+    if ((*(espacios + 3) != ' ') && (*(espacios + 3) == *(espacios + 4) && *(espacios + 4) == *(espacios + 5))) return 2;
+    if ((*(espacios + 6) != ' ') && (*(espacios + 6) == *(espacios + 7) && *(espacios + 7) == *(espacios + 8))) return 3;
 
-void esMovimientoValido(int origen, int destino, char *espacios){
+    // 2. Verificar Columnas (Retornan 4, 5 o 6)
+    if ((*(espacios + 0) != ' ') && (*(espacios + 0) == *(espacios + 3) && *(espacios + 3) == *(espacios + 6))) return 4;
+    if ((*(espacios + 1) != ' ') && (*(espacios + 1) == *(espacios + 4) && *(espacios + 4) == *(espacios + 7))) return 5;
+    if ((*(espacios + 2) != ' ') && (*(espacios + 2) == *(espacios + 5) && *(espacios + 5) == *(espacios + 8))) return 6;
 
-    printf("Ingrese la ficha que desea mover: ");
-    scanf("%d", &origen);
-    printf("Ingrese la ficha que desea mover: ");
-    scanf("%d", &destino);
-    *(espacios+i) == origen;
-    *(espacios+i+1) == destino;
+    // 3. Verificar Diagonales (Retornan 7 u 8)
+    if ((*(espacios + 0) != ' ') && (*(espacios + 0) == *(espacios + 4) && *(espacios + 4) == *(espacios + 8))) return 7;
+    if ((*(espacios + 2) != ' ') && (*(espacios + 2) == *(espacios + 4) && *(espacios + 4) == *(espacios + 6))) return 8;
+
+    // Si nadie ha ganado, devolvemos 0
+    return 0;
+}
+
+int validarDesplazamiento(int origen, int destino, char *espacios) {
+
+    if (destino < 0 || destino > 8) return 0;
+    if (*(espacios + destino) != ' ') return 0;
+    switch (origen) {
+        case 0:
+            if (destino == 1 || destino == 3) return 1;
+            break;
+        case 1:
+            if (destino == 0 || destino == 2 || destino == 4) return 1;
+            break;
+        case 2:
+            if (destino == 1 || destino == 5) return 1;
+            break;
+        case 3:
+            if (destino == 0 || destino == 4 || destino == 6) return 1;
+            break;
+        case 4:
+            if (destino == 1 || destino == 3 || destino == 5 || destino == 7) return 1;
+            break;
+        case 5:
+            if (destino == 2 || destino == 4 || destino == 8) return 1;
+            break;
+        case 6:
+            if (destino == 3 || destino == 7) return 1;
+            break;
+        case 7:
+            if (destino == 4 || destino == 6 || destino == 8) return 1;
+            break;
+        case 8:
+            if (destino == 5 || destino == 7) return 1;
+            break;
+
+        default:
+
+            break;
+    }
+
+    return 0;
 }
