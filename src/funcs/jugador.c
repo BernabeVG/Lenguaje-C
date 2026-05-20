@@ -8,7 +8,7 @@ void inicializarFichas(Jugador *p1, Jugador *p2) {
     p1->numFichas = 3;
     p2->numFichas = 3;
 }
-void turnoJudador(char *espacios, Jugador p, int tipo, int org)
+void turnoJudador(char *espacios, Jugador p, int tipo, int org, char *historial, int *capActual, int *capacidad, char *textoMovimiento)
 {
     int numero, valido = 0;
     do {
@@ -27,9 +27,11 @@ void turnoJudador(char *espacios, Jugador p, int tipo, int org)
         }else {
             *(espacios+numero) = p.simbolo;
         }
+        obtenerTextoPosicion(numero, textoMovimiento); // Se sobreescribe a "1 , 3 = 3"
+        historial = agregarPosicion(historial, capActual, capacidad, textoMovimiento);
     } while (numero < 0 || numero > 8 || !valido);
 }
-void moverFichaPuesta(char *espacios, Jugador p)
+void moverFichaPuesta(char *espacios, Jugador p, char *historial, int *capActual, int *capacidad, char *textoMovimiento)
 {
     int numero, valida = 0;
     do{
@@ -48,10 +50,10 @@ void moverFichaPuesta(char *espacios, Jugador p)
         }
 
     }while(numero < 0 || numero > 8 || !valida);
-    turnoJudador(espacios, p, 2, numero);
+    turnoJudador(espacios, p, 2, numero, historial, capActual, capacidad, textoMovimiento);
     *(espacios+numero) = ' ';
 }
-Jugador* CrearTablaPosiciones() {
+/*Jugador* CrearTablaPosiciones() {
     Jugador *ptr=NULL;
     ptr = (Jugador *) calloc(2, sizeof(Jugador));
 
@@ -69,4 +71,20 @@ Jugador* CrearTablaPosiciones() {
     printf("\n----------------------------------------\n");
 
     return ptr;
+}*/
+
+char* gestionHistorial(char * historial, int* capActual, int*capacidad)
+{
+    if (*capActual >= *capacidad)
+    {
+        int newCapacidad = (*capacidad == 0) ? 2 : (*capacidad * 2); //if(condicion) ?: condicion = true o false
+
+        char* redimensionar = (char*)realloc(historial, newCapacidad * 16);
+
+        if (redimensionar == NULL) { return historial;}
+
+        historial = redimensionar;
+        *capacidad = newCapacidad;
+    }
+    return historial;
 }

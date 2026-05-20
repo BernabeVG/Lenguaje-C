@@ -9,7 +9,7 @@ void instruccionesJuego();
 
 int main()
 {
-    int opcion, linea = 0, t = 0;
+    int opcion, linea = 0, t = 0, capacidad = 0, actual = 0;
     char espacios[9];
 
     // 1. Reservar memoria dinámica para la tabla de posiciones en el Heap
@@ -24,11 +24,14 @@ int main()
     // Mapeo por macros para mantener tus variables p1 y p2 apuntando al Heap
     #define p1 (tablaDinamica[0])
     #define p2 (tablaDinamica[1])
-
+    char text[16];
+    char* historial;
     inicializarFichas(&p1, &p2);
 
     do
     {
+        historial = (char*)calloc(capacidad, 16);// reiniciar historial cada que se inicie una partida, capacidad = 0
+
         inicializarTablero(espacios);
         t = 0;
         printf("\n---Kattam Vilayattu---\n");
@@ -46,6 +49,7 @@ int main()
                  do {
                      system("cls"); // Limpia pantalla antes de redibujar
                      printf("%d", t);
+                     historial = gestionHistorial(historial, &actual, &capacidad );
                      linea = verGanador(espacios);
                      dibujarTablero(espacios, linea);
 
@@ -54,8 +58,8 @@ int main()
                      // Se muestra dinámicamente justo abajo del tablero en cada turno
                      // =======================================================
                      printf("\n[DEBUG MEMORIA HEAP (Tabla Posiciones)]");
-                     printf("\nDireccion de memoria Player 1 ($): %p", (void*)&tablaDinamica[0]);
-                     printf("\nDireccion de memoria Player 2 (+): %p\n", (void*)&tablaDinamica[1]);
+                     printf("\nDireccion de memoria Player 1 ($)");
+                     printf("\nDireccion de memoria Player 2 (+)");
                      printf("-------------------------------------------------------\n");
                      // =======================================================
 
@@ -67,19 +71,20 @@ int main()
                      if (t % 2 == 0) {
                          // --- TURNO DEL PLAYER 1 ---
                          if (p1.numFichas > 0) {
-                             turnoJudador(espacios, p1, 1, 0);
+                             turnoJudador(espacios, p1, 1, 0, historial, &actual, &capacidad, text);
                              p1.numFichas--;
                          } else {
-                             moverFichaPuesta(espacios, p1);
+                             moverFichaPuesta(espacios, p1, historial, &actual, &capacidad, text);
                          }
+
                      }
                      else {
                          // --- TURNO DEL PLAYER 2 ---
                          if (p2.numFichas > 0) {
-                             turnoJudador(espacios, p2, 1, 0);
+                             turnoJudador(espacios, p2, 1, 0, historial, &actual, &capacidad, text);
                              p2.numFichas--;
                          } else {
-                             moverFichaPuesta(espacios, p2);
+                             moverFichaPuesta(espacios, p2, historial, &actual, &capacidad, text);
                          }
                      }
                      t+=1;
@@ -95,11 +100,11 @@ int main()
              }
         printf("\nQuieres volver al inicio? Si = 1 / No = 0: ");
         scanf("%d", &opcion);
+        capacidad = 0;
     }while(opcion == 1);
 
     // 2. Liberación obligatoria del bloque del Heap antes de terminar el programa
-    free(tablaDinamica);
-    tablaDinamica = NULL;
+    free(historial);
 
     return 0;
 }
@@ -118,3 +123,4 @@ void instruccionesJuego()
     printf("\nEn la fase de movimiento: Solo se puede mover a posiciones conectadas.");
     printf("\nUn jugador pierde si: El jugador contrario conecta las 3 fichas\n");
 } //como yo soy naco
+

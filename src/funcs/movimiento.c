@@ -1,5 +1,7 @@
 #include "../funcsH/movimiento.h"
-#include "../funcsH/Jugador.h"
+#include "../funcsH/jugador.h"
+#include <string.h>
+#include <stdio.h>
 
 int movimientoValido(int pos, char *espacios, Jugador p) {
     if (*(espacios + pos) == ' ')
@@ -73,4 +75,50 @@ int validarDesplazamiento(int origen, int destino, char *espacios) {
     }
 
     return 0;
+}
+char* agregarPosicion(char* historial, int* actual, int* capacidad, const char* text)
+{
+    historial = gestionHistorial(historial, actual, capacidad );
+    char* destino = historial + (*actual * 16);
+    strncpy(destino, text, 15);
+    destino[15] = '\0';
+    (*actual)++;
+    return historial;
+}
+void obtenerTextoPosicion(int opcionElegida, char* variableDestino) {
+
+    switch (opcionElegida) {
+    case 1:
+        // snprintf copia el texto exacto dentro de tu variable
+        snprintf(variableDestino, 16, "1 , 1 = 1");
+        break;
+    case 2:
+        snprintf(variableDestino, 16, "1 , 2 = 2");
+        break;
+    case 3:
+        snprintf(variableDestino, 16, "1 , 3 = 3");
+        break;
+    case 4:
+        snprintf(variableDestino, 16, "2 , 1 = 4");
+        break;
+    case 5:
+        snprintf(variableDestino, 16, "2 , 2 = 5");
+        break;
+    case 6:
+        snprintf(variableDestino, 16, "2 , 3 = 6");
+        break;
+    case 7:
+        snprintf(variableDestino, 16, "3 , 1 = 7");
+        break;
+    case 8:
+        snprintf(variableDestino, 16, "3 , 2 = 8");
+        break;
+    case 9:
+        snprintf(variableDestino, 16, "3 , 3 = 9");
+        break;
+    default:
+        // Por si eligen un número que no está en el tablero
+        snprintf(variableDestino, 16, "0 , 0 = 0");
+        break;
+    }
 }

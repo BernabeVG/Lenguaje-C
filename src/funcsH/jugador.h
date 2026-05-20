@@ -8,5 +8,6 @@ typedef struct
 
 Jugador* CrearTablaPosiciones();
 void inicializarFichas(Jugador *p1, Jugador *p2);
-void turnoJudador(char *espacios, Jugador p, int tipo, int org);
-void moverFichaPuesta(char *espacios, Jugador p);
+void turnoJudador(char *espacios, Jugador p, int tipo, int org,char *historial, int *capActual,int *capacidad, char *textoMovimiento);
+void moverFichaPuesta(char *espacios, Jugador p, char *historial, int *capActual, int *capacidad, char *textoMovimiento);
+char* gestionHistorial(char * historial, int* capActual, int*capacidad);
