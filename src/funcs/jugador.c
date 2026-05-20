@@ -51,3 +51,22 @@ void moverFichaPuesta(char *espacios, Jugador p)
     turnoJudador(espacios, p, 2, numero);
     *(espacios+numero) = ' ';
 }
+Jugador* CrearTablaPosiciones() {
+    Jugador *ptr=NULL;
+    ptr = (Jugador *) calloc(2, sizeof(Jugador));
+
+    if (ptr == NULL) {
+        printf("\nError: no fue posible asignar memoria a la tabla");
+        return NULL;
+    }
+
+    ptr[0].simbolo = '$';
+    ptr[1].simbolo = '+';
+
+    printf("\n----------Direcciones---------");
+    printf("\nDireccion de Jugador 1 ($): %p", (void*)&ptr[0]);
+    printf("\nDireccion de Jugador 2 (+): %p", (void*)&ptr[1]);
+    printf("\n----------------------------------------\n");
+
+    return ptr;
+}

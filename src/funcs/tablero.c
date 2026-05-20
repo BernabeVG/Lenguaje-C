@@ -1,6 +1,8 @@
 #include "../funcsH/tablero.h"
 #include <stdio.h>
 
+#include "../funcsH/jugador.h"
+
 // Tablero Colores existentes
 #define RESET      "\033[0m"
 #define AMARILLO   "\033[43m"
